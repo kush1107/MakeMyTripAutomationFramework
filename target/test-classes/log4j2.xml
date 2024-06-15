@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Properties>
+        <Property name="basePath">${env:AUTOMATION_FILES_PATH}\\LumaAutomationFiles\\Results\\ExecutionTestResults\\logs</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile
+                name="rollingFile"
+                fileName="${basePath}/cmcs.log"
+                filePattern="${basePath}/cmcs.%d{MM-dd-yyyy}.log"
+                ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1 MB" />
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd hh:mm} [%t] %c{1} - %msg%n"/>
+        </Console>
+        <!-- Add HTML File Appender -->
+        <File name="htmlFile" fileName="${basePath}/cmcsLogs_${date:yyyy-MM-dd_HH-mm-ss}.html">
+            <HtmlLayout title="HTML Layout Demo" datePattern="ISO8601" timezone="GMT+0"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.qa.luma" additivity="true" level="info">
+            <appender-ref level="info" ref="rollingFile"/>
+            <!-- Add HTML File Appender to the logger -->
+            <appender-ref level="info" ref="htmlFile"/>
+        </Logger>
+        <Root additivity="true" level="info">
+            <appender-ref ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
