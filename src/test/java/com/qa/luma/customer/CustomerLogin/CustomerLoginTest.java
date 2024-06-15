@@ -1,12 +1,15 @@
 package com.qa.luma.customer.CustomerLogin;
 
+
 import com.qa.luma.LumaBaseTest;
 import com.qa.luma.customer.CustomerBaseTest;
 import com.qa.luma.data.excelData.CustomerData;
 import com.qa.luma.data.excelData.LoginUserData;
 import com.qa.luma.utils.ExtentReportManager;
 import com.qa.luma.utils.IListenerTest;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 
 @Listeners(IListenerTest.class)
 public class CustomerLoginTest extends LumaBaseTest {
@@ -26,11 +29,6 @@ public class CustomerLoginTest extends LumaBaseTest {
 
     }
 
-    @AfterClass
-    private void setTestCaseName()
-    {
-        IListenerTest.testName = "CustomerLoginTests";
-    }
 
     @Test(description = "Verify login with valid credentials",priority = 1)
     public void LoginWithValidCredentialsTest()

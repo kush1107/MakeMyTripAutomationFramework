@@ -39,11 +39,13 @@ public class CustomerRegistrationTest extends LumaBaseTest {
         logAndReportWithScreenshot("Navigating to Registration Customer page...");
         cbt.clickCreateAccountLink();
         if (cbt.verifyCreateCustomerTitle()) {
+            logAndReportWithScreenshot("Landed on Registration Customer page...");
             cbt.setFirstName(cRecord.getFirstName());
             cbt.setLastName(cRecord.getLastName());
             cbt.setEmail(cRecord.getEmailAddress());
             cbt.setRegistrationPassword(cRecord.getPassword());
             cbt.setRegistrationConfirmPassword(cRecord.getConfirmationPassword());
+            logAndReportWithScreenshot("Entered Registration Details for Customer...");
             cbt.clickCreateAccountButton();
         }
          validateAnyMessageWithScreenshots("Thank you for registering with Main Website Store");
