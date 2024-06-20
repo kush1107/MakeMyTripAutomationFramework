@@ -27,7 +27,7 @@
         </File>
     </Appenders>
     <Loggers>
-        <Logger name="com.qa.luma" additivity="true" level="info">
+        <Logger name="com.qa.mmt" additivity="true" level="info">
             <appender-ref level="info" ref="rollingFile"/>
             <!-- Add HTML File Appender to the logger -->
             <appender-ref level="info" ref="htmlFile"/>
