@@ -51,6 +51,7 @@ public class IListenerTest implements ITestListener, ISuiteListener {
             log.error("Error logging test success result", e);
         }
         log.info(testName + " test ended");
+        cleanupDriver();
     }
 
     @Override

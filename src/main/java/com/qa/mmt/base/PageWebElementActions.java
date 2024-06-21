@@ -2,10 +2,7 @@ package com.qa.mmt.base;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -15,6 +12,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 public class PageWebElementActions {
 
@@ -63,7 +61,7 @@ public class PageWebElementActions {
     }
 
     public void byCSSAndClick(String CSS) {
-        clickOnElement(By.xpath(CSS));
+        clickOnElement(By.cssSelector(CSS));
     }
 
     public void byXpathAndClickUsingJs(String xpathValue) {
@@ -106,6 +104,11 @@ public class PageWebElementActions {
         return getText(By.xpath(xpathValue));
     }
 
+    public String byCssAndGetTextMessage(String xpathValue) {
+        byCSSAndExplictWaitOnElementVisibility(xpathValue);
+        return getText(By.cssSelector(xpathValue));
+    }
+
     public String byIdAndGetTextMessage(String idValue) {
         return getText(By.id(idValue));
     }
@@ -120,6 +123,10 @@ public class PageWebElementActions {
 
     public boolean byIdAndIsSelected(String idLocator) {
         return driver.findElement(By.id(idLocator)).isSelected();
+    }
+
+    public boolean byXPathAndIsSelected(String xpath) {
+        return driver.findElement(By.xpath(xpath)).isSelected();
     }
 
     public boolean byIdAndIsEnabled(String idLocator) {
@@ -328,4 +335,52 @@ public class PageWebElementActions {
 
     }
 
+    public  void switchToOtherWindow(String mainWindow) {
+        sleep(1500);
+        Set<String> allWindowHandles = driver.getWindowHandles();
+        if (allWindowHandles.size() != 2) {
+            throw new NoSuchWindowException("Only the main window is present. Please ensure another window is opened.");
+        }
+
+        // Find the handle of the other window
+        String otherWindowHandle = null;
+        for (String handle : allWindowHandles) {
+            if (!handle.equals(mainWindow)) {
+                otherWindowHandle = handle;
+                break;
+            }
+        }
+
+        sleep(1500);
+        // Switch to the other window
+        driver.switchTo().window(otherWindowHandle);
+    }
+
+    public void byXpathAndSelectByValue(String xpathValue, String value) {
+        WebElement xpath = driver.findElement(By.xpath(xpathValue));
+        selectFromDropDownByValue(xpath, value);
+    }
+
+    protected void selectFromDropDownByValue(WebElement element, String value) {
+        verifyElementPresentAndClickable(element);
+        if (!value.isEmpty()) {
+            sleep(500);
+        }
+        new Select(element).selectByValue(value);
+    }
+
+    public static Integer extractNumber(String text) {
+        int rupeeIndex = text.indexOf("₹");
+        int dotIndex = text.indexOf(".");
+
+        if (rupeeIndex != -1 && dotIndex > rupeeIndex) {
+            String numberString = text.substring(rupeeIndex + 1, dotIndex);
+            try {
+                return Integer.parseInt(numberString);
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
 }
