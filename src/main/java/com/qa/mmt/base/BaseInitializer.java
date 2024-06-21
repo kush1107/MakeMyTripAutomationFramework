@@ -286,6 +286,17 @@ public class BaseInitializer {
         logAndReportWithScreenshot("Application Launched successfully...");
     }
 
+    public void launchApplicationURL_Amazon(String url)
+    {
+        logAndReport("Launching " + browser + " browser..");
+        driver.manage().deleteAllCookies();
+        driver.get(url);
+        logAndReport("Automation Scripts execution started on URL : " + url);
+        PageWebElementActions pwa = new PageWebElementActions(driver);
+        pwa.byXpathAndExplictWaitOnElementVisibility(commonElements.getProperty("SIGN_IN_LINK_Amazon"));
+        logAndReportWithScreenshot("Application Launched successfully...");
+    }
+
 
 
     public static String getProperty(String propValue) {

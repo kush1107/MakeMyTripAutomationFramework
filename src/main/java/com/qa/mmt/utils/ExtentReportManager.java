@@ -85,7 +85,6 @@ public class ExtentReportManager extends BaseInitializer {
                         ExcelUtils ex = new ExcelUtils();
                         ex.updateTestStatusForPassFail(module, "Failed");
                     } catch (Exception e) {
-                        log.error("Test Case Status is not set to Failed in Excel");
                     }
                     logThrowable(result, status);
                     break;
@@ -106,7 +105,6 @@ public class ExtentReportManager extends BaseInitializer {
                         ExcelUtils ex = new ExcelUtils();
                         ex.updateTestStatusForPassFail(module, "Passed");
                     } catch (Exception e) {
-                        log.error("Test Case Status is not set to Failed in Excel");
                     }
                     break;
                 default:
@@ -116,7 +114,6 @@ public class ExtentReportManager extends BaseInitializer {
             test.log(status, MarkupHelper.createLabel(currentTestCaseName + " - Test Case " + status, ExtentColor.valueOf(colorLabel)));
             attachScreenshot(status.name());
         } catch (Exception e) {
-            log.error("Error logging test result", e);
         }
     }
 
