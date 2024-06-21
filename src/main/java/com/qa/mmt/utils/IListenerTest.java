@@ -91,8 +91,8 @@ public class IListenerTest implements ITestListener, ISuiteListener {
 
     private String returnModifiedTestName(ITestResult result) {
         String[] arr = result.getInstanceName().split("\\.");
-        if (arr.length > 7) {
-            String testName = arr[arr.length - 7];
+        if (arr.length > 1) {
+            String testName = arr[arr.length - 1];
             arr = testName.split("_");
             return arr[0];
         }
